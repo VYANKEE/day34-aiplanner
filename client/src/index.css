@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-dark: #020617;
+  --accent-primary: #6366f1; /* Indigo */
+  --accent-secondary: #ec4899; /* Pink */
+  --accent-cyan: #06b6d4; /* Cyan */
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: #f8fafc;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* --- MOVING AURORA BACKGROUND --- */
+.aurora-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  background: radial-gradient(circle at 50% 50%, rgba(76, 29, 149, 0.15), rgba(15, 23, 42, 1));
+  overflow: hidden;
+}
+
+.aurora-blob {
+  position: absolute;
+  filter: blur(80px);
+  opacity: 0.6;
+  animation: float 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--accent-primary); animation-delay: 0s; }
+.blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--accent-secondary); animation-delay: -2s; }
+.blob-3 { top: 40%; left: 40%; width: 40vw; height: 40vw; background: var(--accent-cyan); animation-delay: -4s; }
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* --- GLASSMORPHISM --- */
+.glass-heavy {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* --- SCROLLBAR --- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #020617; }
+::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+
+/* --- TEXTURE OVERLAY --- */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  opacity: 0.05;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  pointer-events: none;
+}
+/* --- CUSTOM CURSOR --- */
+.custom-cursor {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  transition: transform 0.1s ease-out;
+}
+
+/* --- BORDER BEAM ANIMATION --- */
+.border-gradient {
+  position: relative;
+}
+.border-gradient::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  background: linear-gradient(45deg, #6366f1, transparent, #ec4899, transparent);
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: border-spin 3s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.border-gradient:hover::before {
+  opacity: 1;
+}
+
+@keyframes border-spin {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

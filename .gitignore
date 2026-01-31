@@ -1,0 +1,13 @@
+# Dependencies (Bohot bhaari hoti hain, upload nahi karte)
+node_modules/
+
+# Environment Variables (SECRET KEYS - DO NOT UPLOAD)
+.env
+
+# Build outputs
+dist/
+build/
+
+# Mac/Windows system files
+.DS_Store
+Thumbs.db
