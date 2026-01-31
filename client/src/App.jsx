@@ -24,6 +24,7 @@ const CustomCursor = () => {
   );
 };
 
+// --- TYPEWRITER EFFECT ---
 const Typewriter = ({ text }) => {
   const [displayedText, setDisplayedText] = useState("");
   useEffect(() => {
@@ -39,6 +40,7 @@ const Typewriter = ({ text }) => {
   return <ReactMarkdown>{displayedText}</ReactMarkdown>;
 };
 
+// --- MARQUEE ANIMATION ---
 const Marquee = () => (
   <div className="w-full bg-[#0b1221]/80 border-y border-white/5 py-4 overflow-hidden flex relative z-10 backdrop-blur-md">
     <div className="flex animate-marquee gap-16 whitespace-nowrap text-cyan-400/80 text-sm font-mono tracking-[0.2em] uppercase">
@@ -68,12 +70,14 @@ function App() {
   const { scrollYProgress } = useScroll();
   const yHero = useTransform(scrollYProgress, [0, 1], [0, 150]);
 
+  // --- API CALL (CONNECTED TO YOUR LIVE BACKEND) ---
   const generateRequirements = async () => {
     if (!idea.trim()) return;
     setLoading(true);
     setResponse(null);
     try {
-      const res = await fetch('http://localhost:5000/api/generate', {
+      // 👇 YAHAN TERA LIVE URL UPDATE KAR DIYA HAI
+      const res = await fetch('https://day34-aiplanner.onrender.com/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ idea, ...config }),
@@ -82,13 +86,13 @@ function App() {
       setResponse(data.result);
       setTimeout(() => resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     } catch (error) {
-      setResponse("⚠️ System Offline: Backend connection failed.");
+      setResponse("⚠️ System Offline: Backend connection failed. Please check Render logs.");
     } finally {
       setLoading(false);
     }
   };
 
-  // --- UPDATED DATA WITH 'USE CASE' & 'HOW TO USE' ---
+  // --- DATA FOR HOLOGRAPHIC GUIDE ---
   const helpData = {
     type: { 
       title: "Platform Type", 
@@ -210,14 +214,13 @@ function App() {
               </div>
             </div>
 
-            {/* --- THE UPDATED HOLOGRAPHIC GUIDE --- */}
+            {/* --- HOLOGRAPHIC GUIDE PANEL --- */}
             <Tilt className="hidden lg:block lg:col-span-1 h-full" tiltMaxAngleX={5} tiltMaxAngleY={5}>
               <div className="h-full bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 relative overflow-hidden transition-all flex flex-col justify-center text-left">
                 <AnimatePresence mode='wait'>
                   {activeField ? (
                     <motion.div key={activeField} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                       
-                      {/* Title */}
                       <div className="flex items-center gap-4 mb-6">
                         <div className="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center border border-indigo-500/30">
                           {helpData[activeField].icon}
@@ -225,13 +228,11 @@ function App() {
                         <h3 className="text-2xl font-bold text-white">{helpData[activeField].title}</h3>
                       </div>
 
-                      {/* Definition */}
                       <div className="mb-6">
                         <p className="text-slate-300 text-lg leading-relaxed">{helpData[activeField].definition}</p>
                       </div>
 
                       <div className="space-y-4">
-                        {/* Use Case */}
                         <div className="bg-indigo-500/10 border border-indigo-500/20 p-4 rounded-lg">
                           <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-1 flex items-center gap-2">
                             <Target size={12} /> Use Case
@@ -239,7 +240,6 @@ function App() {
                           <p className="text-sm text-indigo-100">{helpData[activeField].useCase}</p>
                         </div>
 
-                        {/* How To Use */}
                         <div className="bg-purple-500/10 border border-purple-500/20 p-4 rounded-lg">
                           <h4 className="text-xs font-bold text-purple-400 uppercase tracking-widest mb-1 flex items-center gap-2">
                             <Lightbulb size={12} /> How to Use It
