@@ -21,6 +21,7 @@ This is not just a form; it is a **full-stack AI application** featuring a cinem
 * 🎭 **Framer Motion** – Physics-based page transitions and floating elements.
 * 🧊 **React Parallax Tilt** – Interactive 3D hover effects on UI cards.
 * 🔮 **Lucide React** – Beautiful, consistent iconography.
+  
 
 **Backend (The Brain):**
 * 🟢 **Node.js & Express** – Robust REST API architecture.
